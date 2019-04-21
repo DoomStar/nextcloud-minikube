@@ -1,0 +1,15 @@
+apiVersion: v1
+name: nextcloud
+version: 0.1.0
+appVersion: "0.1.0"
+description: nextcloud
+keywords:
+  - nextcloud
+home: https://www.personio.com
+icon: https://www.personio.de/wp-content/uploads/2017/11/personio_logo.svg
+sources:
+  - https://github.com/DoomStar/nextcloud-minikube
+maintainers:
+  - name: Semion Spiridonov
+    email: doom@serverland.ru
+engine: gotpl

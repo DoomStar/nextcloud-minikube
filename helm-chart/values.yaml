@@ -1,0 +1,7 @@
+build_id: latest
+tier: prod
+postgres:
+  host: my-release-postgresql
+  port: 5432
+  user: nextcloud
+  pass: secretpassword
