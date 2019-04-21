@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nextcloud
+  labels:
+    app: {{ template "project.name" . }}
+    chart: {{ template "project.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    role: apache
+spec:
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: {{ template "project.name" . }}
+    role: apache
+  type: NodePort

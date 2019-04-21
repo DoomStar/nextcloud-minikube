@@ -1,7 +1,13 @@
 build_id: latest
 tier: prod
 postgres:
-  host: my-release-postgresql
+  host: postgresql-postgresql
   port: 5432
   user: nextcloud
   pass: secretpassword
+redis:
+  host: redis-master
+nextcloud:
+  user: admin
+  pass: admin
+  host: nextcloud.local.com

@@ -1,0 +1,60 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nextcloud
+  labels:
+    app: {{ template "project.name" . }}
+    chart: {{ template "project.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    role: apache
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ template "project.name" . }}
+        role: apache
+    spec:
+      containers:
+        - name: nextcloud
+          image: "nextcloud:{{ .Values.build_id }}"
+          volumeMounts:
+            - name: config-volume
+              mountPath: /usr/src/nextcloud/config/objectstore.config.php
+              subPath: objectstore.config.php
+          env:
+            - name: POSTGRES_DB
+              value: "{{ .Values.tier }}"
+            - name: POSTGRES_USER
+              value: "{{ .Values.postgres.user }}"
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql-postgresql
+                  key: postgresql-password
+            - name: POSTGRES_HOST
+              value: "{{ .Values.postgres.host }}"
+            - name: REDIS_HOST
+              value: "{{ .Values.redis.host }}"
+            - name: NEXTCLOUD_ADMIN_USER
+              value: "{{ .Values.nextcloud.user }}"
+            - name: NEXTCLOUD_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: nextcloud
+                  key: password
+            - name: NEXTCLOUD_TRUSTED_DOMAINS
+              value: {{ .Values.nextcloud.host }}
+          resources:
+            requests:
+              memory: "500Mi"
+              cpu: "500m"
+            limits:
+              memory: "1000Mi"
+              cpu: "1000m"
+      volumes:
+        - name: config-volume
+          configMap:
+            name: nextcloud
+
