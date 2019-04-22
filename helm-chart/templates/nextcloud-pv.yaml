@@ -1,4 +1,4 @@
-kind: PersistentVolumeClaim
+kind: PersistentVolume
 apiVersion: v1
 metadata:
   name: nextcloud
@@ -11,6 +11,7 @@ spec:
   storageClassName: nextcloud-hostpath
   accessModes:
     - ReadWriteOnce
-  resources:
-    requests:
-      storage: 100Mi
+  hostPath:
+    path: "/tmp/nextcloud"
+  capacity:
+    storage: 100Mi

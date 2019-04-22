@@ -10,4 +10,4 @@ redis:
 nextcloud:
   user: admin
   pass: admin
-  host: nextcloud.local.com
+  host: nextcloud.127.0.0.1.xip.io

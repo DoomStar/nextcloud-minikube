@@ -23,6 +23,8 @@ spec:
             - name: config-volume
               mountPath: /usr/src/nextcloud/config/objectstore.config.php
               subPath: objectstore.config.php
+            - name: nextcloud
+              mountPath: /var/www/html
           env:
             - name: POSTGRES_DB
               value: "{{ .Values.tier }}"
@@ -57,4 +59,6 @@ spec:
         - name: config-volume
           configMap:
             name: nextcloud
-
+        - name: nextcloud
+          persistentVolumeClaim:
+            claimName: nextcloud

@@ -9,22 +9,22 @@ metadata:
     heritage: {{ .Release.Service }}
 data:
   objectstore.config.php: |-
-<?
-$CONFIG = array (
-  'objectstore' => array(
-    'class' => '\\OC\\Files\\ObjectStore\\S3',
-    'arguments' => array(
-      'bucket' => 'nextcloud',
-      'autocreate' => true,
-      'key'    => 'myaccesskey',
-      'secret' => 'mysecretkey',
-      'hostname' => 'minio',
-      'port' => 9000,
-      'use_ssl' => false,
-      'region' => 'us-east-1',
-      // required for some non Amazon S3 implementations
-      'use_path_style'=>true
-    ),
-  ),
-);
-?>
+    <?php
+    $CONFIG = array (
+      'objectstore' => array(
+        'class' => '\\OC\\Files\\ObjectStore\\S3',
+        'arguments' => array(
+          'bucket' => 'nextcloud',
+          'autocreate' => true,
+          'key'    => 'myaccesskey',
+          'secret' => 'mysecretkey',
+          'hostname' => 'minio',
+          'port' => 9000,
+          'use_ssl' => false,
+          'region' => 'us-east-1',
+          // required for some non Amazon S3 implementations
+          'use_path_style'=>true
+        ),
+      ),
+    );
+    ?>
