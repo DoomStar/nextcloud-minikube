@@ -1,0 +1,38 @@
+stages:
+  - build
+  - stage
+  - prod
+
+Build:
+  stage: build
+  when: manual
+  allow_failure: false
+  tags:
+    - shell
+  script:
+    - docker build --tag nextcloud:${CI_PIPELINE_ID} docker
+    - docker push nextcloud:${CI_PIPELINE_ID}
+
+Deploy stage:
+  stage: stage
+  tags:
+  - shell
+  script:
+    - |
+      helm upgrade --install nextcloud_stage \
+        --namespace nextcloud_stage \
+        --kube-context docker-for-desktop \
+        --set build_id=${CI_PIPELINE_ID} \
+          ./helm-chart/
+
+Deploy prod:
+  stage: prod
+  tags:
+  - shell
+  script:
+    - |
+      helm upgrade --install nextcloud_prod \
+        --namespace nextcloud_prod \
+        --kube-context docker-for-desktop \
+        --set build_id=${CI_PIPELINE_ID} \
+          ./helm-chart/
